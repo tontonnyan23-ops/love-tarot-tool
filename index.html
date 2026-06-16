@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>恋愛タロット鑑定ツール</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="tool-panel" aria-label="鑑定入力">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">Love Tarot Delivery Tool</p>
+            <h1>恋愛タロット鑑定ツール</h1>
+          </div>
+          <button class="icon-button" id="resetButton" type="button" aria-label="入力をリセット" title="入力をリセット">
+            ↻
+          </button>
+        </div>
+
+        <div class="mode-picker" aria-label="鑑定モード">
+          <button class="mode-button active" type="button" data-mode="custom">1️⃣ 相談者の占ってほしい事に沿って占う</button>
+          <button class="mode-button" type="button" data-mode="fixed">2️⃣ 商品に設定している固定のテーマで占う</button>
+        </div>
+
+        <form id="readingForm" class="form-grid">
+          <section class="form-section client-section full-span" aria-labelledby="clientSectionTitle">
+            <div class="section-heading">
+              <span class="section-badge">相談者さん</span>
+              <h3 id="clientSectionTitle">鑑定を受ける方の情報</h3>
+            </div>
+            <div class="section-grid">
+              <label>
+                相談者さんのお名前
+                <input id="clientName" name="clientName" type="text" placeholder="例：さくらさん" />
+              </label>
+
+              <fieldset class="choice-field">
+                <legend>相談者さんの性別</legend>
+                <div class="choice-buttons">
+                  <label>
+                    <input name="clientGender" type="radio" value="女性" />
+                    <span>女性</span>
+                  </label>
+                  <label>
+                    <input name="clientGender" type="radio" value="男性" />
+                    <span>男性</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label>
+                相談者さんの年齢
+                <input id="clientAge" name="clientAge" type="text" placeholder="例：32歳" />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section partner-section full-span" aria-labelledby="partnerSectionTitle">
+            <div class="section-heading">
+              <span class="section-badge">お相手さん</span>
+              <h3 id="partnerSectionTitle">恋愛のお相手の情報</h3>
+            </div>
+            <div class="section-grid">
+              <label>
+                お相手さんのお名前
+                <input id="partnerName" name="partnerName" type="text" placeholder="例：ゆうきさん" />
+              </label>
+
+              <fieldset class="choice-field">
+                <legend>お相手さんの性別</legend>
+                <div class="choice-buttons">
+                  <label>
+                    <input name="partnerGender" type="radio" value="女性" />
+                    <span>女性</span>
+                  </label>
+                  <label>
+                    <input name="partnerGender" type="radio" value="男性" />
+                    <span>男性</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <label>
+                お相手さんの年齢
+                <input id="partnerAge" name="partnerAge" type="text" placeholder="例：34歳" />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section details-section full-span" aria-labelledby="detailsSectionTitle">
+            <div class="section-heading">
+              <span class="section-badge">相談内容</span>
+              <h3 id="detailsSectionTitle">関係性と相談者さんから届いた内容</h3>
+            </div>
+            <div class="section-grid single">
+              <label>
+                お二人のご関係
+                <input id="relationship" name="relationship" type="text" placeholder="例：職場の同僚、元恋人、SNSで知り合ったなど" />
+              </label>
+
+              <label>
+                相談内容・状況
+                <textarea id="question" name="question" rows="6" placeholder="相談者さんからいただいた相談文や、聞き直して得た状況説明を入力してください"></textarea>
+                <span class="field-help">
+                  詳しい情報があるほど鑑定の精度が上がります。相談者さんから届いた内容に加えて、こちらから確認して得た背景、最近のやり取り、気になっている出来事など、鑑定に必要な情報をできるだけ具体的に入力してください。
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <label id="fixedThemeField" class="full-span hidden">
+            占いテーマ
+            <textarea id="fixedTheme" name="fixedTheme" rows="4" placeholder="例：&#10;・彼の気持ち&#10;・二人の現在&#10;・二人の未来"></textarea>
+          </label>
+
+          <label>
+            鑑定ボリューム
+            <select id="volume" name="volume">
+              <option value="standard">スタンダード：約1300〜1600文字前後</option>
+              <option value="light">ライト：約800〜1000文字前後</option>
+              <option value="full">フル：約1800〜2200文字前後</option>
+            </select>
+          </label>
+
+          <label>
+            カード名
+            <select id="cardDisplay" name="cardDisplay">
+              <option value="hidden">基本は明示しない</option>
+              <option value="shown">カード名を併記する</option>
+            </select>
+          </label>
+
+          <div class="option-row full-span">
+            <label class="toggle">
+              <input id="includeNextOffer" name="includeNextOffer" type="checkbox" checked />
+              <span>次の鑑定のご提案を入れる</span>
+            </label>
+            <label class="toggle">
+              <input id="operatorIdeas" name="operatorIdeas" type="checkbox" />
+              <span>操作者向け「提案5」を作る</span>
+            </label>
+          </div>
+
+          <div class="volume-note full-span">
+            <p>・ライト：約800〜1000文字前後（要点をシンプルに整理）</p>
+            <p>・スタンダード：約1300〜1600文字前後（心理や流れを丁寧に読み解く）</p>
+            <p>・フル：約1800〜2200文字前後（深掘り＋感情整理＋行動ヒント）</p>
+            <p>※文字数は目安であり、読みやすさと内容の自然さを最優先とする。</p>
+          </div>
+
+          <button class="primary-button full-span" type="submit">鑑定書とプロンプトを作成</button>
+        </form>
+      </section>
+
+      <section class="result-panel" aria-label="鑑定結果">
+        <div class="result-header">
+          <div>
+            <p class="eyebrow">Delivery Preview</p>
+            <h2>納品用鑑定書プレビュー</h2>
+          </div>
+          <button id="copyReadingButton" class="secondary-button" type="button">鑑定書をコピー</button>
+        </div>
+
+        <article id="readingOutput" class="reading-card">
+          <p>入力すると、ここにココナラ等で納品しやすい名前入り鑑定書が表示されます。</p>
+        </article>
+
+        <div class="prompt-box">
+          <div class="result-header compact">
+            <div>
+              <p class="eyebrow">GPTs Prompt</p>
+              <h2>GPTsに渡すプロンプト</h2>
+            </div>
+            <button id="copyPromptButton" class="secondary-button" type="button">プロンプトをコピー</button>
+          </div>
+          <pre id="promptOutput">鑑定書を作成すると、GPTs用プロンプトが表示されます。</pre>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
